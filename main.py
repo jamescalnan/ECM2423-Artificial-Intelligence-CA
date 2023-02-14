@@ -68,6 +68,7 @@ def printMazeFromAdjacencyList(al, currentV):
 
 
 def depthFirstSearch(adjacencyList, root, goal):
+	return 0, 0
 	discovered = []
 	S = []
 
@@ -97,7 +98,7 @@ def depthFirstSearch(adjacencyList, root, goal):
 				cameFrom[w] = v
 
 	c.print("[*] [red]No solution possible")
-	return 0
+	return 0, 0
 
 
 def backtrackSolution(solutionMap, root, goal):
@@ -192,7 +193,7 @@ class BinaryHeapPriorityQueue:
 
 
 def aStar(adjacencyList, root, goal):
-	multiplier = 10
+	multiplier = .6
 
 	distance = {root: heuristic(root, goal, multiplier)}
 	cameFrom = {root: None}
@@ -219,8 +220,8 @@ def aStar(adjacencyList, root, goal):
 				heap.enqueue(priority, neighbor)
 
 				cameFrom[neighbor] = current
-
-	return 0
+	c.print("[*] [red]No solution possible")
+	return 0, 0
 
 def heuristic(current, goal, m=1):
 	return (abs(current[0] - goal[0]) + abs(current[1] - goal[1])) * m
@@ -265,11 +266,12 @@ c.print("\n[*] DFS Solving started...")
 DFS_start = time.time()
 DFS_solutionMap, DFS_explored = depthFirstSearch(adjacencyList, root, goal)
 
-c.print("[*] Constructing solution from map...")
-DFS_path = backtrackSolution(DFS_solutionMap, root, goal)
-c.print("[*] Solution constructed\n")
-DFS_end = time.time()
-c.print(statsTable(f"DFS on {mazeFileName}", DFS_explored, adjacencyList, DFS_path, DFS_start, DFS_end))
+if DFS_solutionMap != 0:
+	c.print("[*] Constructing solution from map...")
+	DFS_path = backtrackSolution(DFS_solutionMap, root, goal)
+	c.print("[*] Solution constructed\n")
+	DFS_end = time.time()
+	c.print(statsTable(f"DFS on {mazeFileName}", DFS_explored, adjacencyList, DFS_path, DFS_start, DFS_end))
 
 
 c.print("\n[*] A* Solving started...")
