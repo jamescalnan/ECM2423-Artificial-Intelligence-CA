@@ -109,6 +109,10 @@ maze-Large-ASTAR-Solution.txt
 maze-Large-DFS-Solution.txt
 ```
 
+# Author
+- James Calnan
 
+# License
+MIT License
 
 
