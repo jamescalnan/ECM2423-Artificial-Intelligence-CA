@@ -3,8 +3,6 @@ import os
 import time
 from rich.table import Table
 from rich.console import Console
-from rich.pretty import pprint
-from rich.progress import track
 from time import sleep
 
 c = Console()
@@ -40,9 +38,6 @@ def returnNeighbours(maze, x, y):
 
 	# Return the list of neighbors
 	return neighbours
-
-
-
 
 
 def buildAdjacencyList(maze):
@@ -326,7 +321,7 @@ c.print("\n[*] DFS Solving started...")
 DFS_start = time.time()
 DFS_solutionMap, DFS_explored = depthFirstSearch(adjacencyList, root, goal)
 if DFS_solutionMap != 0:
-	c.print("[*] [green] Solution found\n")
+	c.print("[*] [green]Solution found\n")
 	c.print("[*] Constructing solution from map...")
 	DFS_path = backtrackSolution(DFS_solutionMap, root, goal)
 	c.print("[*] Solution constructed\n")
@@ -345,6 +340,7 @@ c.print("\n\n[*] A* Solving started...")
 ASTAR_start = time.time()
 ASTAR_solutionMap, ASTAR_explored = aStar(adjacencyList, root, goal)
 if ASTAR_solutionMap != 0:
+	c.print("[*] [green]Solution found\n")
 	c.print("[*] Constructing solution from map...")
 	ASTAR_path = backtrackSolution(ASTAR_solutionMap, root, goal)
 	c.print("[*] Solution constructed\n")
