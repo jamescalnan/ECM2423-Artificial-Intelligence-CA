@@ -1,105 +1,62 @@
 import math
 import os
 import time
+from queue import PriorityQueue
+from collections import deque, defaultdict
 from rich.table import Table
 from rich.console import Console
-from time import sleep
 
 c = Console()
 
-def readMazeFile(name):
-	return open(name).read().strip().split("\n")
 
+def readMazeFile(name):
+    with open(name) as f:
+        return f.read().strip().split("\n")
 
 def returnNeighbours(maze, x, y):
-	# Initialize an empty list to hold the neighbors of the given cell
+    # Initialize an empty list to hold the neighbors of the given cell
 	neighbours = []
 
+	
+	
+	# Check the cell to the right of the given cell
+	if maze[y][x + 2] == "-":
+		# If the cell to the right is a valid path, add it to the list of neighbors
+		neighbours.append((x + 2, y))
+
+	
 
 	# Check the cell above the given cell
 	if y - 1 >= 0 and maze[y - 1][x] == "-":
 		# If the above cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
 		neighbours.append((x, y - 1))
-
-	# Check the cell to the right of the given cell
-	if maze[y][x + 2] == "-":
-		# If the cell to the right is a valid path, add it to the list of neighbors
-		neighbours.append((x + 2, y))
+	
+	
 
 	# Check the cell to the left of the given cell
 	if maze[y][x - 2] == "-":
 		# If the cell to the left is a valid path, add it to the list of neighbors
 		neighbours.append((x - 2, y))
 
+
 	# Check the cell below the given cell
 	if not (y + 1) == len(maze) and maze[y + 1][x] == "-":
 		# If the below cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
 		neighbours.append((x, y + 1))
-
 	# Return the list of neighbors
 	return neighbours
 
 
 def buildAdjacencyList(maze):
-	adjacencyList = {}
+    bounds = (0, len(maze), 0, len(maze[0]))
+    adjacencyList = defaultdict(list)
 
-	for y in range(len(maze)):
-		for x in range(len(maze[y])):
-			# Iterate over each point in the maze
-			if maze[y][x] == "-":
-				# Check if the current point is a node and if so add the current nodes neighbours to the dictionary
-				adjacencyList[(x, y)] = returnNeighbours(maze, x, y)
-
-	# Return the adjacency list
-	return adjacencyList
-
-
-
-def depthFirstSearch(adjacencyList, root, goal):
-	# Initialize an empty list to hold the vertices that have been discovered
-	discovered = []
-	# Initialize an empty stack to hold the vertices to be explored
-	S = []
-	# Initialize an empty dictionary to hold the vertices that lead to each discovered vertex
-	cameFrom = {}
-
-	# Add the root vertex to the stack
-	S.append(root)
-
-	# Initialize a counter to keep track of the number of nodes explored
-	nodesExplored = 0
-
-	# While there are still vertices to be explored
-	while len(S) > 0:
-		# Pop a vertex from the stack
-		v = S.pop()
-		# Increment the counter
-		nodesExplored += 1
-
-		# If the goal has been reached, return the cameFrom dictionary and the number of nodes explored
-		if v == goal:
-			return cameFrom, nodesExplored
-
-		# If the vertex has not been discovered yet
-		if v not in discovered:
-			# Add it to the list of discovered vertices
-			discovered.append(v)
-
-			# For each neighbor of the current vertex
-			for w in adjacencyList[v]:
-				# If the neighbor has already been discovered, skip it
-				if w in discovered:
-					continue
-
-				# Add the neighbor to the stack to be explored
-				S.append(w)
-				# Record the current vertex as the one that leads to the neighbor
-				cameFrom[w] = v
-
-	# If the goal was not found, return 0 for both the cameFrom dictionary and the number of nodes explored
-	return 0, nodesExplored
-
-
+    for y in range(bounds[1]):
+        for x in range(0, bounds[3], 2):
+            if maze[y][x] == "-":
+                adjacencyList[(x, y)] = returnNeighbours(maze, x, y)
+    
+    return adjacencyList
 
 def backtrackSolution(solutionMap, root, goal):
 	# Set the current vertex to be the goal
@@ -119,6 +76,56 @@ def backtrackSolution(solutionMap, root, goal):
 
 	# Return the path from the goal to the root
 	return path
+
+
+def depthFirstSearch(adjacencyList, root, goal):
+    # Initialize an empty set to keep track of discovered vertices.
+    discovered = set()
+    
+    # Initialize a double-ended queue to store vertices to visit.
+    S = deque()
+    
+    # Add the starting vertex to the queue.
+    S.append(root)
+    
+    # Initialize an empty dictionary to keep track of the path from each visited vertex to its predecessor.
+    cameFrom = {}
+    
+    # Initialize a counter to keep track of the number of nodes explored during the traversal.
+    nodesExplored = 0
+    
+    # While there are vertices in the queue:
+    while S:
+        
+        # Pop the last vertex from the queue.
+        v = S.pop()
+        
+        # Increment the node counter.
+        nodesExplored += 1
+    
+        # If the current vertex is the goal, return the path to it and the number of nodes explored.
+        if v == goal:
+            return cameFrom, nodesExplored
+    
+        # If the current vertex has not been discovered yet:
+        if v not in discovered:
+            
+            # Mark it as discovered.
+            discovered.add(v)
+    
+            # For each adjacent vertex w:
+            for w in adjacencyList[v]:
+                
+                # If w has already been discovered, skip it.
+                if w in discovered:
+                    continue
+                
+                # Otherwise, add w to the queue and record the path from v to w.
+                S.append(w)
+                cameFrom[w] = v
+    
+    # If the goal was not reached, return 0 for the path and the number of nodes explored.
+    return None, nodesExplored
 
 
 
@@ -145,25 +152,25 @@ def saveSolution(mazeFileName, maze, solution, algorithm):
 
 
 class BinaryHeapPriorityQueue:
-	# Define an init method which is called when an object of the class is instantiated
+	# Init method which is called when an object of the class is instantiated
     def __init__(self):
     	# Initialize an empty list to store the heap and a variable to store the size of the heap
         self.heap = []
         self.size = 0
 
-    # Define a method called cameFrom that takes an index as input and returns the index of its parent node
+    # Method called cameFrom that takes an index as input and returns the index of its parent node
     def cameFrom(self, i):
         return (i - 1) // 2
 
-    # Define a method called left_child that takes an index as input and returns the index of its left child
+    # Method called left_child that takes an index as input and returns the index of its left child
     def left_child(self, i):
         return 2 * i + 1
 
-    # Define a method called right_child that takes an index as input and returns the index of its right child
+    # Method called right_child that takes an index as input and returns the index of its right child
     def right_child(self, i):
         return 2 * i + 2
 
-    # Define a method called extractMin that removes and returns the element with the lowest priority from the heap
+    # Removes and returns the element with the lowest priority from the heap
     def extractMin(self):
     	# If the size of the heap is 0, return None
         if self.size <= 0:
@@ -183,7 +190,7 @@ class BinaryHeapPriorityQueue:
         # Return the root element that was removed
         return root
 
-    # Define a method called enqueue that adds an element to the heap with a given priority and value
+    # Adds an element to the heap with a given priority and value
     def enqueue(self, priority, value):
     	# Append the element to the end of the heap and increase the size by 1
         self.heap.append((priority, value))
@@ -194,7 +201,7 @@ class BinaryHeapPriorityQueue:
             self.heap[i], self.heap[self.cameFrom(i)] = self.heap[self.cameFrom(i)], self.heap[i]
             i = self.cameFrom(i)
 
-    # Define a method called _minHeapify that maintains the min-heap property for a given node in the heap
+    # Maintains the min-heap property for a given node in the heap
     def _minHeapify(self, i):
         l = self.left_child(i)
         r = self.right_child(i)
@@ -210,11 +217,11 @@ class BinaryHeapPriorityQueue:
             self.heap[i], self.heap[smallest] = self.heap[smallest], self.heap[i]
             self._minHeapify(smallest)
 
-    # Define a method to return the size of the queue
+    # Method to return the size of the queue
     def getSize(self):
         return self.size
 
-    # Define a method to return true if an item is in the queue
+    # Method to return true if an item is in the queue
     def contains(self, value):
     	# Iterate over the items in the queue and check if its equal
         for _, v in self.heap:
@@ -222,59 +229,130 @@ class BinaryHeapPriorityQueue:
                 return True
         return False
 
-    # Define a method to return the contents of the queue
+    # Method to return the contents of the queue
     def toString(self):
         return str(self.heap)
 
 
+def informedDepthFirstSearch(adjacencyList, root, goal):
+    # Initialize an empty set to keep track of discovered vertices.
+    discovered = set()
+    
+    # Initialize a priority queue to store vertices to visit.
+    S = PriorityQueue()
+    
+    # Add the starting vertex to the queue.
+    S.put((heuristic(root, goal), root))
+    
+    # Initialize an empty dictionary to keep track of the path from each visited vertex to its predecessor.
+    cameFrom = {}
+    
+    # Initialize a counter to keep track of the number of nodes explored during the traversal.
+    nodesExplored = 0
+    
+    # While there are vertices in the queue:
+    while not S.empty():
+        
+        # Pop the vertex with the highest priority from the queue.
+        _, v = S.get()
+        
+        # Increment the node counter.
+        nodesExplored += 1
+    
+        # If the current vertex is the goal, return the path to it and the number of nodes explored.
+        if v == goal:
+            return cameFrom, nodesExplored
+    
+        # If the current vertex has not been discovered yet:
+        if v not in discovered:
+            
+            # Mark it as discovered.
+            discovered.add(v)
+
+            # For each adjacent vertex w:
+            for w in adjacencyList[v]:
+                
+                # If w has already been discovered, skip it.
+                if w in discovered:
+                    continue
+                
+                # Otherwise, add w to the queue with a priority based on the heuristic value and record the path from v to w.
+                priority = heuristic(w, goal)
+                S.put((priority, w))
+                cameFrom[w] = v
+
+    # If the goal was not reached, return 0 for the path and the number of nodes explored.
+    return None, nodesExplored
+
+
 def aStar(adjacencyList, root, goal):
-	# Set the heuristic multiplier to 10.
-	multiplier = 10
+    # Set the heuristic multiplier.
+    multiplier = .8
 
-	# Create a dictionary to hold the distances from the root to each vertex.
-	# Initialize the distance to the root to be the heuristic distance.
-	distance = {root: heuristic(root, goal, multiplier)}
+    # Create a dictionary to hold the distances from the root to each vertex.
+    # Initialize the distance to the root to be the heuristic distance.
+    distance = defaultdict(lambda: float('inf'))
+    distance[root] = heuristic(root, goal, multiplier)
 
-	# Create a dictionary to hold the parent of each vertex in the shortest path from the root to that vertex.
-	cameFrom = {root: None}
+    # Create a dictionary to hold the parent of each vertex in the shortest path from the root to that vertex.
+    cameFrom = {root: None}
 
-	# Create a binary heap priority queue to store the vertices.
-	heap = BinaryHeapPriorityQueue()
+    # Create a binary heap priority queue to store the vertices.
+    # Create a priority queue to store the vertices.
+    # heap = heapdict()
+    prioQueue = PriorityQueue()
 
-	# Enqueue the root with a priority of 0.
-	heap.enqueue(0, root)
+    # Enqueue the root with a priority of 0.
+    prioQueue.put((0, root))
+    # heap[root] = 0
 
-	# Keep track of the number of nodes explored.
-	nodesExplored = 0
+    # Keep track of the number of nodes explored.
+    nodesExplored = 0
 
-	# While there are vertices in the heap.
-	while heap.getSize() > 0:
-		# Extract the vertex with the lowest priority.
-		current = heap.extractMin()[1]
-		nodesExplored += 1
-	
-		# If the current vertex is the goal, return the shortest path.
-		if current == goal:
-			return cameFrom, nodesExplored
+    # Create a cache for the heuristic values.
+    heuristicCache = defaultdict()
 
-		# For each neighbor of the current vertex.
-		for neighbor in adjacencyList[current]:
-			# Calculate the tentative distance from the root to the neighbor through the current vertex.
-			tentative_distance = distance[current] + heuristic(neighbor, current)
 
-			# If the tentative distance is less than the current distance to the neighbor, update the distance.
-			if neighbor not in distance or tentative_distance < distance[neighbor]:
-				distance[neighbor] = tentative_distance
-				# Calculate the priority of the neighbor as the sum of the tentative distance and the heuristic distance to the goal.
-				priority = tentative_distance + heuristic(neighbor, goal, multiplier)
-				# Enqueue the neighbor with the calculated priority.
-				heap.enqueue(priority, neighbor)
+    # While there are vertices in the heap.
+    while not prioQueue.empty():
+        # Extract the vertex with the lowest priority.
+        # current, priority = heap.popitem()
+        _, current = prioQueue.get()
+        nodesExplored += 1
+    
+        # If the current vertex is the goal, return the shortest path.
+        if current == goal:
+            return cameFrom, nodesExplored
 
-				# Set the parent of the neighbor to the current vertex.
-				cameFrom[neighbor] = current
+        # For each neighbor of the current vertex.
+        for neighbor in adjacencyList[current]:
+            # Calculate the tentative distance from the root to the neighbor through the current vertex.
+            tentative_distance = distance[current] + 1 #heuristic(neighbor, current)
 
-	# If there is no path from the root to the goal, return 0 for the path and the number of nodes explored.
-	return 0, nodesExplored
+            # If the tentative distance is less than the current distance to the neighbor, update the distance.
+            if tentative_distance < distance[neighbor]:
+                distance[neighbor] = tentative_distance
+
+                # Check if the heuristic value for the neighbor is already cached.
+                if neighbor in heuristicCache:
+                    # Use the cached value.
+                    heuristic_value = heuristicCache[neighbor]
+                else:
+                    # Calculate the heuristic value and cache it.
+                    heuristic_value = heuristic(neighbor, goal, multiplier)
+                    heuristicCache[neighbor] = heuristic_value
+
+                # Calculate the priority of the neighbor as the sum of the tentative distance and the heuristic distance to the goal.
+                priority = tentative_distance + heuristic_value
+                # Enqueue the neighbor with the calculated priority.
+                # heap[neighbor] = priority
+                prioQueue.put((priority, neighbor))
+                # Set the parent of the neighbor to the current vertex.
+                cameFrom[neighbor] = current
+
+    # If there is no path from the root to the goal, return 0 for the path and the number of nodes explored.
+    return None, nodesExplored
+
 
 # Heuristic function that calculates the manhatten distance between two points
 def heuristic(current, goal, m=1):
@@ -294,11 +372,14 @@ mazeFileName = availableMazeFiles[int(c.input("\n[*] Maze: ")) - 1]
 
 # Read maze file into memory and build adjacency list.
 c.print("\n[*] Reading file into memory...")
+start = time.time()
 mazeFile = readMazeFile(mazeFileName)
-c.print("[*] File read into memory\n")
+c.print(f"[*] File read into memory, time taken: {round(time.time() - start, 5)} seconds\n")
+# Make adjacency list
 c.print("[*] Constructing adjacency list...")
+start = time.time()
 adjacencyList = buildAdjacencyList(mazeFile)
-c.print("[*] Adjacency list built\n")
+c.print(f"[*] Adjacency list built, time taken: {round(time.time() - start, 5)} seconds\n")
 
 # Get the root and goal nodes for the maze (first and last nodes in adjacencyList)
 root = list(adjacencyList.keys())[0]
@@ -316,42 +397,34 @@ def statsTable(algorithm, explored, adjacencyList, path, start, end):
 	table.add_row("Solution percentage", f"[green]{int(len(path)/len(adjacencyList) * 100)}%")
 	return table
 
-# Use depth-first search to solve the maze.
-c.print("\n[*] DFS Solving started...")
-DFS_start = time.time()
-DFS_solutionMap, DFS_explored = depthFirstSearch(adjacencyList, root, goal)
-if DFS_solutionMap != 0:
-	c.print("[*] [green]Solution found\n")
-	c.print("[*] Constructing solution from map...")
-	DFS_path = backtrackSolution(DFS_solutionMap, root, goal)
-	c.print("[*] Solution constructed\n")
-	DFS_end = time.time()
-	# Print statistics table for DFS solution.
-	c.print(statsTable(f"DFS on {mazeFileName}", DFS_explored, adjacencyList, DFS_path, DFS_start, DFS_end))
-	# Save DFS solution to file.
-	c.print("[*] Saving solution...")
-	saveSolution(mazeFileName, mazeFile.copy(), DFS_path, "DFS")
-	c.print("[*] DFS Solution saved")
-else:
-	c.print(f"[*] [red]No solution possible[white], {DFS_explored} vertices explored")
+def solveMaze(adjacencyList, root, goal, mazeFileName, algorithmType):
+    # Determine which algorithm to use.
+    if algorithmType == "DFS":
+        solveFunc = depthFirstSearch
+    elif algorithmType == "ASTAR":
+        solveFunc = aStar
+    else:
+        raise ValueError(f"Invalid algorithm type '{algorithmType}'")
 
-# Use A* algorithm to solve the maze.
-c.print("\n\n[*] A* Solving started...")
-ASTAR_start = time.time()
-ASTAR_solutionMap, ASTAR_explored = aStar(adjacencyList, root, goal)
-if ASTAR_solutionMap != 0:
-	c.print("[*] [green]Solution found\n")
-	c.print("[*] Constructing solution from map...")
-	ASTAR_path = backtrackSolution(ASTAR_solutionMap, root, goal)
-	c.print("[*] Solution constructed\n")
-	ASTAR_end = time.time()
-	# Print statistics table for A* solution.
-	c.print(statsTable(f"A* on {mazeFileName}", ASTAR_explored, adjacencyList, ASTAR_path, ASTAR_start, ASTAR_end))
-	# Save A* solution to file.
-	c.print("[*] Saving solution...")
-	saveSolution(mazeFileName, mazeFile.copy(), ASTAR_path, "DFS")
-	c.print("[*] A* Solution saved")
-else:
-	c.print(f"[*] [red]No solution possible[white], {ASTAR_explored} vertices explored")
+    # Solve the maze using the specified algorithm.
+    c.print(f"\n[*] {algorithmType} Solving started...")
+    start = time.time()
+    solutionMap, explored = solveFunc(adjacencyList, root, goal)
+    if solutionMap is not None:
+        c.print("[*] [green]Solution found\n")
+        c.print("[*] Constructing solution from map...")
+        path = backtrackSolution(solutionMap, root, goal)
+        c.print("[*] Solution constructed\n")
+        end = time.time()
+        # Print statistics table for solution.
+        c.print(statsTable(f"{algorithmType} on {mazeFileName}", explored, adjacencyList, path, start, end))
+        # Save solution to file.
+        c.print("[*] Saving solution...")
+        saveSolution(mazeFileName, mazeFile.copy(), path, algorithmType)
+        c.print(f"[*] {algorithmType} Solution saved")
+    else:
+        c.print(f"[*] [red]No solution possible[white], {explored} vertices explored")
 
 
+solveMaze(adjacencyList, root, goal, mazeFileName, "DFS")
+solveMaze(adjacencyList, root, goal, mazeFileName, "ASTAR")
