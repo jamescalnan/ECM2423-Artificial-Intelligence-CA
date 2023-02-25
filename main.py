@@ -358,33 +358,6 @@ def aStar(adjacencyList, root, goal):
 def heuristic(current, goal, m=1):
 	return (abs(current[0] - goal[0]) + abs(current[1] - goal[1])) * m
 
-
-
-
-# Create a list of maze files in the current directory, exclude solution files.
-availableMazeFiles = [x for x in os.listdir() if ("maze" in x and "Solution" not in x)]
-
-# Print the available files and allow user to select a maze file.
-c.print("[*] Available files:")
-for i, availableMaze in enumerate(availableMazeFiles):
-	c.print(f"[{i+1}] {availableMaze}")
-mazeFileName = availableMazeFiles[int(c.input("\n[*] Maze: ")) - 1]
-
-# Read maze file into memory and build adjacency list.
-c.print("\n[*] Reading file into memory...")
-start = time.time()
-mazeFile = readMazeFile(mazeFileName)
-c.print(f"[*] File read into memory, time taken: {round(time.time() - start, 5)} seconds\n")
-# Make adjacency list
-c.print("[*] Constructing adjacency list...")
-start = time.time()
-adjacencyList = buildAdjacencyList(mazeFile)
-c.print(f"[*] Adjacency list built, time taken: {round(time.time() - start, 5)} seconds\n")
-
-# Get the root and goal nodes for the maze (first and last nodes in adjacencyList)
-root = list(adjacencyList.keys())[0]
-goal = list(adjacencyList.keys())[-1]
-
 # Define a function to create a table of statistics.
 def statsTable(algorithm, explored, adjacencyList, path, start, end):
 	table = Table(title=f"Statistics for {algorithm}")
@@ -423,8 +396,35 @@ def solveMaze(adjacencyList, root, goal, mazeFileName, algorithmType):
         saveSolution(mazeFileName, mazeFile.copy(), path, algorithmType)
         c.print(f"[*] {algorithmType} Solution saved")
     else:
-        c.print(f"[*] [red]No solution possible[white], {explored} vertices explored")
+        c.print(f"[*] [red]No solution possible[white], {explored} vertices explored, {round(time.time() - start, 5)} seconds taken")
 
 
+# Create a list of maze files in the current directory, exclude solution files.
+availableMazeFiles = [x for x in os.listdir() if ("maze" in x and "Solution" not in x)]
+
+# Print the available files and allow user to select a maze file.
+c.print("[*] Available files:")
+for i, availableMaze in enumerate(availableMazeFiles):
+	c.print(f"[{i+1}] {availableMaze}")
+mazeFileName = availableMazeFiles[int(c.input("\n[*] Maze: ")) - 1]
+
+
+# Read maze file into memory and build adjacency list.
+c.print("\n[*] Reading file into memory...")
+start = time.time()
+mazeFile = readMazeFile(mazeFileName)
+c.print(f"[*] File read into memory, time taken: {round(time.time() - start, 5)} seconds\n")
+# Make adjacency list
+c.print("[*] Constructing adjacency list...")
+start = time.time()
+adjacencyList = buildAdjacencyList(mazeFile)
+c.print(f"[*] Adjacency list built, time taken: {round(time.time() - start, 5)} seconds\n")
+
+# Get the root and goal nodes for the maze (first and last nodes in adjacencyList)
+root = list(adjacencyList.keys())[0]
+goal = list(adjacencyList.keys())[-1]
+
+
+# Solve maze using the two algorithms
 solveMaze(adjacencyList, root, goal, mazeFileName, "DFS")
 solveMaze(adjacencyList, root, goal, mazeFileName, "ASTAR")
