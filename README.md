@@ -24,7 +24,7 @@ Wait for the package installation process to complete.
 
 Verify that the package was installed successfully by running the following command:
 ```bash
-python -c "import rich; print(rich.__version__)"
+pip show rich
 ```
 
 ## Run
@@ -56,10 +56,10 @@ Inputting option 2 will yield the following output:
 [*] Maze: 2
 
 [*] Reading file into memory...
-[*] File read into memory
+[*] File read into memory, time taken: 0.00401 seconds
 
 [*] Constructing adjacency list...
-[*] Adjacency list built
+[*] Adjacency list built, time taken: 0.11293 seconds
 
 
 [*] DFS Solving started...
@@ -72,41 +72,40 @@ Inputting option 2 will yield the following output:
 ┌──────────────────────────────┬─────────────────┐
 │ Statistic                    │ Value           │
 ├──────────────────────────────┼─────────────────┤
-│ Vertices visited             │ 10939           │
-│ Percentage of maze explored  │ 13%             │
-│ Solution length              │ 1121            │
-│ Time taken to solve the maze │ 3.55459 seconds │
+│ Vertices visited             │ 70512           │
+│ Percentage of maze explored  │ 85%             │
+│ Solution length              │ 1051            │
+│ Time taken to solve the maze │ 0.05697 seconds │
 │ Solution percentage          │ 1%              │
 └──────────────────────────────┴─────────────────┘
 [*] Saving solution...
 [*] DFS Solution saved
 
-
-[*] A* Solving started...
+[*] ASTAR Solving started...
 [*] Solution found
 
 [*] Constructing solution from map...
 [*] Solution constructed
 
-      Statistics for A* on maze-Large.txt
+     Statistics for ASTAR on maze-Large.txt
 ┌──────────────────────────────┬───────────────┐
 │ Statistic                    │ Value         │
 ├──────────────────────────────┼───────────────┤
-│ Vertices visited             │ 14405         │
-│ Percentage of maze explored  │ 17%           │
-│ Solution length              │ 1097          │
-│ Time taken to solve the maze │ 0.128 seconds │
+│ Vertices visited             │ 41752         │
+│ Percentage of maze explored  │ 50%           │
+│ Solution length              │ 975           │
+│ Time taken to solve the maze │ 0.233 seconds │
 │ Solution percentage          │ 1%            │
 └──────────────────────────────┴───────────────┘
 [*] Saving solution...
-[*] A* Solution saved
+[*] ASTAR Solution saved
 ```
 
-In this case, the maze solutions will then be saved in the following files:
+In this case, the maze solutions will then be saved in their respective directories as the following:
 
 ```bash
-maze-Large-ASTAR-Solution.txt
-maze-Large-DFS-Solution.txt
+ASTAR-Solutions\maze-Large-ASTAR-Solution.txt
+DFS-Solutions\maze-Large-DFS-Solution.txt
 ```
 
 # Author
