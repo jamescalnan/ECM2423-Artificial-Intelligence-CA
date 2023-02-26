@@ -16,33 +16,26 @@ def readMazeFile(name):
 def returnNeighbours(maze, x, y):
     # Initialize an empty list to hold the neighbors of the given cell
 	neighbours = []
-
+	# Check the cell above the given cell
+	if y - 1 >= 0 and maze[y - 1][x] == "-":
+		# If the above cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
+		neighbours.append((x, y - 1))
 	
+	# Check the cell below the given cell
+	if not (y + 1) == len(maze) and maze[y + 1][x] == "-":
+		# If the below cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
+		neighbours.append((x, y + 1))
 	
 	# Check the cell to the right of the given cell
 	if maze[y][x + 2] == "-":
 		# If the cell to the right is a valid path, add it to the list of neighbors
 		neighbours.append((x + 2, y))
 
-	
-
-	# Check the cell above the given cell
-	if y - 1 >= 0 and maze[y - 1][x] == "-":
-		# If the above cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
-		neighbours.append((x, y - 1))
-	
-	
-
 	# Check the cell to the left of the given cell
 	if maze[y][x - 2] == "-":
 		# If the cell to the left is a valid path, add it to the list of neighbors
 		neighbours.append((x - 2, y))
 
-
-	# Check the cell below the given cell
-	if not (y + 1) == len(maze) and maze[y + 1][x] == "-":
-		# If the below cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
-		neighbours.append((x, y + 1))
 	# Return the list of neighbors
 	return neighbours
 
@@ -145,8 +138,12 @@ def saveSolution(mazeFileName, maze, solution, algorithm):
 		# Append the line to the output string with a newline character
 		outputString += line + "\n"
 
+
+	if not os.path.exists(f"{algorithm}-Solutions/"):
+		os.makedirs(f"{algorithm}-Solutions/")
+		
 	# Open a file with a name that includes the original maze file name, the name of the algorithm used, and the string "-Solution" 
-	with open(f"{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
+	with open(f"{algorithm}-Solutions/{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
 		# Write the output string to the file
 		file.write(outputString)
 
