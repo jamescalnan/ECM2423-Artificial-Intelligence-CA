@@ -381,10 +381,11 @@ def solveMaze(adjacencyList, root, goal, mazeFileName, algorithmType):
     start = time.time()
     solutionMap, explored = solveFunc(adjacencyList, root, goal)
     if solutionMap is not None:
-        c.print("[*] [green]Solution found\n")
+        c.print(f"[*] [green]Solution found, [white]time taken: [cyan]{round(time.time() - start, 5)}\n")
+        backtrackTime = time.time()
         c.print("[*] Constructing solution from map...")
         path = backtrackSolution(solutionMap, root, goal)
-        c.print("[*] Solution constructed\n")
+        c.print(f"[*] Solution constructed, time taken: {round(time.time() - backtrackTime, 5)}\n")
         end = time.time()
         # Print statistics table for solution.
         c.print(statsTable(f"{algorithmType} on {mazeFileName}", explored, adjacencyList, path, start, end))
