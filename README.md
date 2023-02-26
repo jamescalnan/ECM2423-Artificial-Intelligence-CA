@@ -56,47 +56,47 @@ Inputting option 2 will yield the following output:
 [*] Maze: 2
 
 [*] Reading file into memory...
-[*] File read into memory, time taken: 0.00401 seconds
+[*] File read into memory, time taken: 0.00408 seconds
 
 [*] Constructing adjacency list...
-[*] Adjacency list built, time taken: 0.11293 seconds
+[*] Adjacency list built, time taken: 0.12608 seconds
 
 
 [*] DFS Solving started...
-[*] Solution found
+[*] Solution found, time taken: 0.05004
 
 [*] Constructing solution from map...
-[*] Solution constructed
+[*] Solution constructed, time taken: 0.001
 
-       Statistics for DFS on maze-Large.txt
-┌──────────────────────────────┬─────────────────┐
-│ Statistic                    │ Value           │
-├──────────────────────────────┼─────────────────┤
-│ Vertices visited             │ 70512           │
-│ Percentage of maze explored  │ 85%             │
-│ Solution length              │ 1051            │
-│ Time taken to solve the maze │ 0.05697 seconds │
-│ Solution percentage          │ 1%              │
-└──────────────────────────────┴─────────────────┘
+      Statistics for DFS on maze-Large.txt
+┌──────────────────────────────┬───────────────┐
+│ Statistic                    │ Value         │
+├──────────────────────────────┼───────────────┤
+│ Vertices visited             │ 70512         │
+│ Percentage of maze explored  │ 85%           │
+│ Solution length              │ 1051          │
+│ Time taken to solve the maze │ 0.055 seconds │
+│ Solution percentage          │ 1%            │
+└──────────────────────────────┴───────────────┘
 [*] Saving solution...
 [*] DFS Solution saved
 
 [*] ASTAR Solving started...
-[*] Solution found
+[*] Solution found, time taken: 0.21654
 
 [*] Constructing solution from map...
-[*] Solution constructed
+[*] Solution constructed, time taken: 0.0021
 
      Statistics for ASTAR on maze-Large.txt
-┌──────────────────────────────┬───────────────┐
-│ Statistic                    │ Value         │
-├──────────────────────────────┼───────────────┤
-│ Vertices visited             │ 41752         │
-│ Percentage of maze explored  │ 50%           │
-│ Solution length              │ 975           │
-│ Time taken to solve the maze │ 0.233 seconds │
-│ Solution percentage          │ 1%            │
-└──────────────────────────────┴───────────────┘
+┌──────────────────────────────┬────────────────┐
+│ Statistic                    │ Value          │
+├──────────────────────────────┼────────────────┤
+│ Vertices visited             │ 41752          │
+│ Percentage of maze explored  │ 50%            │
+│ Solution length              │ 975            │
+│ Time taken to solve the maze │ 0.2235 seconds │
+│ Solution percentage          │ 1%             │
+└──────────────────────────────┴────────────────┘
 [*] Saving solution...
 [*] ASTAR Solution saved
 ```
