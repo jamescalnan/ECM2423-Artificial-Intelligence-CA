@@ -139,11 +139,8 @@ def saveSolution(mazeFileName, maze, solution, algorithm):
 		outputString += line + "\n"
 
 
-	if not os.path.exists(f"{algorithm}-Solutions/"):
-		os.makedirs(f"{algorithm}-Solutions/")
-		
 	# Open a file with a name that includes the original maze file name, the name of the algorithm used, and the string "-Solution" 
-	with open(f"{algorithm}-Solutions/{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
+	with open(f"{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
 		# Write the output string to the file
 		file.write(outputString)
 

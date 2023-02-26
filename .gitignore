@@ -55,6 +55,9 @@ cover/
 *.mo
 *.pot
 
+# Maze files
+maze-*.txt
+
 # Django stuff:
 *.log
 local_settings.py
