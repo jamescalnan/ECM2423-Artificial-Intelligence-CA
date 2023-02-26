@@ -104,8 +104,8 @@ Inputting option 2 will yield the following output:
 In this case, the maze solutions will then be saved in their respective directories as the following:
 
 ```bash
-ASTAR-Solutions\maze-Large-ASTAR-Solution.txt
-DFS-Solutions\maze-Large-DFS-Solution.txt
+maze-Large-ASTAR-Solution.txt
+maze-Large-DFS-Solution.txt
 ```
 
 # Author
