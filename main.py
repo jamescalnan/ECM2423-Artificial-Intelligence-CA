@@ -119,7 +119,7 @@ def depthFirstSearch(adjacencyList, root, goal):
 				# Set the parent of the neighbour to the current node
 				cameFrom[w] = v
 	
-	# If the goal was not reached, return 0 for the path and the number of nodes explored.
+	# If the goal was not reached, return None for the path and the number of nodes explored.
 	return None, nodesExplored
 
 
@@ -228,7 +228,7 @@ class BinaryHeapPriorityQueue:
 		return str(self.heap)
 
 
-def informedDepthFirstSearch(adjacencyList, root, goal):
+def bestFirstSearch(adjacencyList, root, goal):
 	# Initialize an empty set to keep track of discovered nodes.
 	discovered = set()
 	
@@ -344,7 +344,7 @@ def aStar(adjacencyList, root, goal):
 				# Set the parent of the neighbor to the current node.
 				cameFrom[neighbor] = current
 
-	# If there is no path from the root to the goal, return 0 for the path and the number of nodes explored.
+	# If there is no path from the root to the goal, return None for the path and the number of nodes explored.
 	return None, nodesExplored
 
 
