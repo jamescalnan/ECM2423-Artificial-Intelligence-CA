@@ -113,16 +113,16 @@ You can also choose to run the two algorithms on the same maze any number of tim
 [*] Amount of runs: 100
 
 [*] Reading file into memory...
-[*] File read into memory, time taken: 0.001 seconds
+[*] File read into memory, time taken: 0.00103 seconds
 
 [*] Constructing adjacency list...
-[*] Adjacency list built, time taken: 0.11704 seconds
+[*] Adjacency list built, time taken: 0.11418 seconds
 
 [*] Solving mazes... ---------------------------------------- 100% 0:00:00
 
-[*] DFS stats over 100 runs: average: 0.0493907, min: 0.0459976
+[*] DFS stats over 100 runs: average time taken: 0.0622518, min time taken: 0.0478888
 
-[*] A* stats over 100 runs: average: 0.0930812, min: 0.0889952
+[*] A* stats over 100 runs: average time taken: 0.1183534, minimum time taken: 0.0948439
 
 [*] Stats for a single run
         Statistics for DFS on maze-Large.txt
@@ -132,7 +132,7 @@ You can also choose to run the two algorithms on the same maze any number of tim
 │ Nodes visited                │ 70512             │
 │ Percentage of maze explored  │ 85%               │
 │ Solution length              │ 1051              │
-│ Time taken to solve the maze │ 0.0510449 seconds │
+│ Time taken to solve the maze │ 0.0525796 seconds │
 │ Solution percentage          │ 1%                │
 └──────────────────────────────┴───────────────────┘
        Statistics for ASTAR on maze-Large.txt
@@ -142,7 +142,7 @@ You can also choose to run the two algorithms on the same maze any number of tim
 │ Nodes visited                │ 41752             │
 │ Percentage of maze explored  │ 50%               │
 │ Solution length              │ 975               │
-│ Time taken to solve the maze │ 0.0919619 seconds │
+│ Time taken to solve the maze │ 0.1048491 seconds │
 │ Solution percentage          │ 1%                │
 └──────────────────────────────┴───────────────────┘
 ```
