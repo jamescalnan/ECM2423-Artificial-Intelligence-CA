@@ -16,15 +16,17 @@ Pip package installer
 Installation Steps
 Open a terminal window on your computer.
 
-Install the rich library by running the following command:
+Install the rich and typing library by running the following command:
 ```bash
 pip install rich
+pip install typing
 ```
 Wait for the package installation process to complete.
 
-Verify that the package was installed successfully by running the following command:
+Verify that the packages were installed successfully by running the following commands:
 ```bash
 pip show rich
+pip show typing
 ```
 
 ## Run
@@ -55,53 +57,99 @@ Inputting option 2 will yield the following output:
 ```bash
 [*] Maze: 2
 
+[*] Average solving time over x runs? (y/n) n
+
 [*] Reading file into memory...
-[*] File read into memory, time taken: 0.00408 seconds
+[*] File read into memory, time taken: 0.002 seconds
 
 [*] Constructing adjacency list...
-[*] Adjacency list built, time taken: 0.12608 seconds
+[*] Adjacency list built, time taken: 0.11004 seconds
 
 
 [*] DFS Solving started...
-[*] Solution found, time taken: 0.05004
+[*] Solution found, time taken: 0.05005
 
 [*] Constructing solution from map...
 [*] Solution constructed, time taken: 0.001
 
-      Statistics for DFS on maze-Large.txt
-┌──────────────────────────────┬───────────────┐
-│ Statistic                    │ Value         │
-├──────────────────────────────┼───────────────┤
-│ Vertices visited             │ 70512         │
-│ Percentage of maze explored  │ 85%           │
-│ Solution length              │ 1051          │
-│ Time taken to solve the maze │ 0.055 seconds │
-│ Solution percentage          │ 1%            │
-└──────────────────────────────┴───────────────┘
+        Statistics for DFS on maze-Large.txt
+┌──────────────────────────────┬───────────────────┐
+│ Statistic                    │ Value             │
+├──────────────────────────────┼───────────────────┤
+│ Nodes visited                │ 70512             │
+│ Percentage of maze explored  │ 85%               │
+│ Solution length              │ 1051              │
+│ Time taken to solve the maze │ 0.0580637 seconds │
+│ Solution percentage          │ 1%                │
+└──────────────────────────────┴───────────────────┘
 [*] Saving solution...
 [*] DFS Solution saved
 
 [*] ASTAR Solving started...
-[*] Solution found, time taken: 0.21654
+[*] Solution found, time taken: 0.09303
 
 [*] Constructing solution from map...
-[*] Solution constructed, time taken: 0.0021
+[*] Solution constructed, time taken: 0.001
 
-     Statistics for ASTAR on maze-Large.txt
-┌──────────────────────────────┬────────────────┐
-│ Statistic                    │ Value          │
-├──────────────────────────────┼────────────────┤
-│ Vertices visited             │ 41752          │
-│ Percentage of maze explored  │ 50%            │
-│ Solution length              │ 975            │
-│ Time taken to solve the maze │ 0.2235 seconds │
-│ Solution percentage          │ 1%             │
-└──────────────────────────────┴────────────────┘
+       Statistics for ASTAR on maze-Large.txt
+┌──────────────────────────────┬───────────────────┐
+│ Statistic                    │ Value             │
+├──────────────────────────────┼───────────────────┤
+│ Nodes visited                │ 41752             │
+│ Percentage of maze explored  │ 50%               │
+│ Solution length              │ 975               │
+│ Time taken to solve the maze │ 0.0979979 seconds │
+│ Solution percentage          │ 1%                │
+└──────────────────────────────┴───────────────────┘
 [*] Saving solution...
 [*] ASTAR Solution saved
 ```
 
-In this case, the maze solutions will then be saved in their respective directories as the following:
+You can also choose to run the two algorithms on the same maze any number of times and then average the time taken to solve the maze:
+
+```bash
+[*] Average solving time over x runs? (y/n) y
+
+[*] Amount of runs: 100
+
+[*] Reading file into memory...
+[*] File read into memory, time taken: 0.001 seconds
+
+[*] Constructing adjacency list...
+[*] Adjacency list built, time taken: 0.11704 seconds
+
+[*] Solving mazes... ---------------------------------------- 100% 0:00:00
+
+[*] DFS stats over 100 runs: average: 0.0493907, min: 0.0459976
+
+[*] A* stats over 100 runs: average: 0.0930812, min: 0.0889952
+
+[*] Stats for a single run
+        Statistics for DFS on maze-Large.txt
+┌──────────────────────────────┬───────────────────┐
+│ Statistic                    │ Value             │
+├──────────────────────────────┼───────────────────┤
+│ Nodes visited                │ 70512             │
+│ Percentage of maze explored  │ 85%               │
+│ Solution length              │ 1051              │
+│ Time taken to solve the maze │ 0.0510449 seconds │
+│ Solution percentage          │ 1%                │
+└──────────────────────────────┴───────────────────┘
+       Statistics for ASTAR on maze-Large.txt
+┌──────────────────────────────┬───────────────────┐
+│ Statistic                    │ Value             │
+├──────────────────────────────┼───────────────────┤
+│ Nodes visited                │ 41752             │
+│ Percentage of maze explored  │ 50%               │
+│ Solution length              │ 975               │
+│ Time taken to solve the maze │ 0.0919619 seconds │
+│ Solution percentage          │ 1%                │
+└──────────────────────────────┴───────────────────┘
+```
+
+
+
+In this case, the maze solutions will then be saved in the same directory as the python file, the names of the solutions will be:
 
 ```bash
 maze-Large-ASTAR-Solution.txt
