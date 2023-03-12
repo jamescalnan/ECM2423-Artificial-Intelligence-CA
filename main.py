@@ -12,7 +12,7 @@ from rich.progress import track
 c = Console()
 
 
-def readMazeFile(name: str) -> list[str]:
+def readMazeFile(name: str) -> list:
     """
     Reads in the contents of a maze file and returns a list of strings.
 
@@ -191,7 +191,7 @@ def depthFirstSearch(adjacencyList: Dict[Tuple, List[Tuple]], root: Tuple, goal:
 
 
 
-def saveSolution(mazeFileName: str, maze: list[str], solution: list[tuple[int, int]], algorithm: str) -> None:
+def saveSolution(mazeFileName: str, maze: list, solution: list, algorithm: str) -> None:
 	"""
 	Takes a maze file name, the maze itself, the solution path, and the algorithm used to find the solution.
 	Modifies the maze by replacing the characters on the solution path with an 'X' and saves the modified maze 
