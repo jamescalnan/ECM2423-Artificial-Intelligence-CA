@@ -599,9 +599,9 @@ if average:
 		DFSVals.append(DFStime)
 		ASTARvals.append(ASTARtime)
 
-	c.print(f"\n[*] DFS stats over {runs} runs: average: {round(sum(DFSVals)/len(DFSVals), 7)}, min: {round(min(DFSVals), 7)}")
+	c.print(f"\n[*] DFS stats over {runs} runs: average time taken: {round(sum(DFSVals)/len(DFSVals), 7)}, min time taken: {round(min(DFSVals), 7)}")
 
-	c.print(f"\n[*] A* stats over {runs} runs: average: {round(sum(ASTARvals)/len(ASTARvals), 7)}, min: {round(min(ASTARvals), 7)}")
+	c.print(f"\n[*] A* stats over {runs} runs: average time taken: {round(sum(ASTARvals)/len(ASTARvals), 7)}, minimum time taken: {round(min(ASTARvals), 7)}")
 	
 
 	if i == runs-1:
