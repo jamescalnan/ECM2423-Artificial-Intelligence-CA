@@ -122,7 +122,7 @@ def backtrackSolution(solutionMap: dict, root: Tuple, goal: Tuple) -> list:
     path.append(root)
 
     # Return the path from the goal to the root
-    return path
+    return set(path)
 
 
 def depthFirstSearch(adjacencyList: Dict[Tuple, List[Tuple]], root: Tuple, goal: Tuple) -> Tuple[Dict[Tuple, Tuple], int]:
