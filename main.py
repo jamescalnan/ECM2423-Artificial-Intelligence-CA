@@ -268,7 +268,7 @@ def solveMaze(adjacencyList: Dict[int, List[Tuple[int, int]]], root: int, goal: 
         saved = saveSolution(mazeFileName, mazeFile.copy(), path, algorithmType)
         if print:
             if saved:
-                c.print(f"[*] {algorithmType} Solution saved")
+                c.print(f"[*] {algorithmType} Solution saved in /solutions/ directory")
             else:
                 c.print(f"[*] Solution failed to save")
 
@@ -341,7 +341,7 @@ if __name__ == "__main__":
             ASTARvals.append(ASTARtime)
 
         # Create a table for the averaged times
-        table = Table(title=f"Statistics over {runs} runs")
+        table = Table(title=f"Time statistics over {runs} runs")
 
         # Add columns to the table
         table.add_column("[bold]Algorithm")
@@ -357,12 +357,14 @@ if __name__ == "__main__":
         c.print("\n")
         c.print(table)
 
-        if i == runs-1:
-            # Print the statistics for a single run
-            c.print("\n[*] Statistics for a single run:\n")
-            c.print(DFSstats)
+        # if i == runs-1:
+        # Print the statistics for a single run
+        c.print("\n[*] Statistics for a single run:\n")
+        c.print(DFSstats)
 
-            c.print(ASTARstats)
+        c.print(ASTARstats)
+
+        c.print("\n[*] Solutions saved in /solutions/ directory")        
 
     else:
         solveMaze(adjacencyList, root, goal, mazeFileName, "DFS")
