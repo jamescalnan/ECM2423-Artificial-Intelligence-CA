@@ -110,29 +110,35 @@ You can also choose to run the two algorithms on the same maze any number of tim
 ```bash
 [*] Average solving time over x runs? (y/n) y
 
-[*] Amount of runs: 100
+[*] Amount of runs: 10
 
 [*] Reading file into memory...
-[*] File read into memory, time taken: 0.00103 seconds
+[*] File read into memory, time taken: 0.00201 seconds
 
 [*] Constructing adjacency list...
-[*] Adjacency list built, time taken: 0.11418 seconds
+[*] Adjacency list built, time taken: 0.11301 seconds
 
 [*] Solving mazes... ---------------------------------------- 100% 0:00:00
 
-[*] DFS stats over 100 runs: average time taken: 0.0622518, min time taken: 0.0478888
 
-[*] A* stats over 100 runs: average time taken: 0.1183534, minimum time taken: 0.0948439
+                 Statistics over 10 runs
+┌───────────┬──────────────┬──────────────┬──────────────┐
+│ Algorithm │ Average time │ Minimum time │ Maximum time │
+├───────────┼──────────────┼──────────────┼──────────────┤
+│ A*        │ 0.0983459    │ 0.0870056    │ 0.1149325    │
+│ DFS       │ 0.0518827    │ 0.0469904    │ 0.060997     │
+└───────────┴──────────────┴──────────────┴──────────────┘
 
-[*] Stats for a single run
+[*] Statistics for a single run:
+
         Statistics for DFS on maze-Large.txt
 ┌──────────────────────────────┬───────────────────┐
 │ Statistic                    │ Value             │
 ├──────────────────────────────┼───────────────────┤
 │ Nodes visited                │ 70512             │
 │ Percentage of maze explored  │ 85%               │
-│ Solution length              │ 1051              │
-│ Time taken to solve the maze │ 0.0525796 seconds │
+│ Solution length              │ 1050              │
+│ Time taken to solve the maze │ 0.0480368 seconds │
 │ Solution percentage          │ 1%                │
 └──────────────────────────────┴───────────────────┘
        Statistics for ASTAR on maze-Large.txt
@@ -141,8 +147,8 @@ You can also choose to run the two algorithms on the same maze any number of tim
 ├──────────────────────────────┼───────────────────┤
 │ Nodes visited                │ 41752             │
 │ Percentage of maze explored  │ 50%               │
-│ Solution length              │ 975               │
-│ Time taken to solve the maze │ 0.1048491 seconds │
+│ Solution length              │ 974               │
+│ Time taken to solve the maze │ 0.0920417 seconds │
 │ Solution percentage          │ 1%                │
 └──────────────────────────────┴───────────────────┘
 ```
