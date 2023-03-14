@@ -164,9 +164,6 @@ def saveSolution(mazeFileName: str, maze: list, solution: list, algorithm: str) 
 
     if not os.path.exists(directory):
         os.makedirs(directory)
-        print("Directory created successfully!")
-    else:
-        print("Directory already exists!")
 
     # Open a file with a name that includes the original maze file name, the name of the algorithm used, and the string "-Solution" 
     with open(f"{directory}{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
@@ -291,6 +288,7 @@ if __name__ == "__main__":
 
     average = True if a == "y" else False
     
+    # If the user chose to run the algorithms multiple times, ask them how many
     if average:
         runs = int(c.input("\n[*] Amount of runs: "))
 
@@ -316,26 +314,31 @@ if __name__ == "__main__":
 
     # Solve maze using the two algorithms
     if average:
-        # If the algorithms need to be run multiple times
+        # If the algorithms need to be run multiple times, store the time taken to solve the maze
         DFSVals = []
         ASTARvals = []
+
+        # Store the stats for the table
         DFSstats = None
         ASTARstats = None
+
+        # Run the algorithms
         for i in track(range(runs), description="[*] Solving mazes..."):
             DFStime, DFSstats = (solveMaze(adjacencyList, root, goal, mazeFileName, "DFS", False))
             ASTARtime, ASTARstats = (solveMaze(adjacencyList, root, goal, mazeFileName, "ASTAR", False))
             DFSVals.append(DFStime)
             ASTARvals.append(ASTARtime)
 
+        # Create a table for the averaged times
         table = Table(title=f"Statistics over {runs} runs")
 
-        # Add columns for the statistic and its value
+        # Add columns to the table
         table.add_column("[bold]Algorithm")
         table.add_column("[bold]Average time")
         table.add_column("[bold]Minimum time")
         table.add_column("[bold]Maximum time")
 
-        # Add rows for the various statistics being measured
+        # Add the various statistics (algorithm, average time, minimum time, maximum time)
         table.add_row("A*", str(round(sum(ASTARvals)/len(ASTARvals), 7)), str(round(min(ASTARvals),7)), str(round(max(ASTARvals),7)))
         table.add_row("DFS", str(round(sum(DFSVals)/len(DFSVals), 7)), str(round(min(DFSVals),7)), str(round(max(DFSVals),7)))
         
