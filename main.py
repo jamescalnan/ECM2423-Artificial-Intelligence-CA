@@ -38,37 +38,37 @@ def readMazeFile(name: str) -> list:
 
 def returnNeighbours(maze: List[List[str]], x: int, y: int) -> List[Tuple[int, int]]:
     """
-    Returns the coordinates of all the neighboring cells that are valid paths (represented by a `-` character).
+    Returns the coordinates of all the neighboring nodes that are valid paths (represented by a `-` character).
 
     Args:
         maze (list[list[str]]): A 2D list of strings representing the maze.
-        x (int): The x-coordinate of the cell in the maze.
-        y (int): The y-coordinate of the cell in the maze.
+        x (int): The x-coordinate of the node in the maze.
+        y (int): The y-coordinate of the node in the maze.
 
     Returns:
-        list[tuple[int, int]]: A list of coordinates of all the neighboring cells that are valid paths.
+        list[tuple[int, int]]: A list of coordinates of all the neighboring nodes that are valid paths.
     """
-    # Initialize an empty list to hold the neighbors of the given cell
+    # Initialize an empty list to hold the neighbors of the given node
     neighbours = []
     
-    # Check the cell above the given cell
+    # Check the node above the given node
     if y - 1 >= 0 and maze[y - 1][x] == "-":
-        # If the above cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
+        # If the above node is within the boundaries of the maze and is a valid path, add it to the list of neighbors
         neighbours.append((x, y - 1))
     
-    # Check the cell below the given cell
+    # Check the node below the given node
     if not (y + 1) == len(maze) and maze[y + 1][x] == "-":
-        # If the below cell is within the boundaries of the maze and is a valid path, add it to the list of neighbors
+        # If the below node is within the boundaries of the maze and is a valid path, add it to the list of neighbors
         neighbours.append((x, y + 1))
     
-    # Check the cell to the right of the given cell
+    # Check the node to the right of the given node
     if maze[y][x + 2] == "-":
-        # If the cell to the right is a valid path, add it to the list of neighbors
+        # If the node to the right is a valid path, add it to the list of neighbors
         neighbours.append((x + 2, y))
 
-    # Check the cell to the left of the given cell
+    # Check the node to the left of the given node
     if maze[y][x - 2] == "-":
-        # If the cell to the left is a valid path, add it to the list of neighbors
+        # If the node to the left is a valid path, add it to the list of neighbors
         neighbours.append((x - 2, y))
 
     # Return the list of neighbors
@@ -80,10 +80,10 @@ def buildAdjacencyList(maze: List[List[str]]) -> defaultdict:
     Build an adjacency list representation of the given maze.
     
     Args:
-        maze (list of lists): A 2D grid representation of the maze, where "-" represents a wall and " " represents a path
+        maze (list of lists): A 2D grid representation of the maze, where "-" represents a node and " " represents an edge
     
     Returns:
-        adjacencyList (defaultdict): A defaultdict where each key is a tuple representing a cell in the maze, and the value is a list of its neighbours
+        adjacencyList (defaultdict): A defaultdict where each key is a tuple representing a node in the maze, and the value is a list of its neighbours
     """
     bounds = (0, len(maze), 0, len(maze[0])) # set the bounds of the maze as a tuple
     
@@ -91,7 +91,7 @@ def buildAdjacencyList(maze: List[List[str]]) -> defaultdict:
     
     for y in range(bounds[1]): # loop through all rows in the maze
         for x in range(0, bounds[3], 2): # loop through every other column in the maze
-            if maze[y][x] == "-": # if the current cell is a wall, add its neighbours to the adjacency list
+            if maze[y][x] == "-": # if the current position is a node, add its neighbours to the adjacency list
                 adjacencyList[(x, y)] = returnNeighbours(maze, x, y)
     
     return adjacencyList
