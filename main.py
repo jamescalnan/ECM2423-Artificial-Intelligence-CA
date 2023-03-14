@@ -84,7 +84,6 @@ def buildAdjacencyList(maze: List[List[str]]) -> defaultdict:
     
     Returns:
         adjacencyList (defaultdict): A defaultdict where each key is a tuple representing a cell in the maze, and the value is a list of its neighbours
-    
     """
     bounds = (0, len(maze), 0, len(maze[0])) # set the bounds of the maze as a tuple
     
@@ -108,7 +107,7 @@ def backtrackSolution(solutionMap: dict, root: Tuple, goal: Tuple) -> list:
         goal: The end node in the solution path.
 
     Returns:
-        A list of nodes representing the solution path from the goal to the root node.
+        path (set): A set of nodes representing the solution path from the goal to the root node.
     """
     # Set the current node to be the goal
     current = goal
@@ -142,7 +141,10 @@ def saveSolution(mazeFileName: str, maze: list, solution: list, algorithm: str) 
         algorithm (str): A string representing the algorithm used to find the solution.
 
     Returns:
-        None
+        bool: if the function completes its execution
+
+    Raises:
+        Raises an exception if the file can't be saved
     """
 
     # Initialize an empty string to hold the output
@@ -165,10 +167,16 @@ def saveSolution(mazeFileName: str, maze: list, solution: list, algorithm: str) 
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    # Open a file with a name that includes the original maze file name, the name of the algorithm used, and the string "-Solution" 
-    with open(f"{directory}{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
-        # Write the output string to the file
-        file.write(outputString)
+    try:
+        # Open a file with a name that includes the original maze file name, the name of the algorithm used, and the string "-Solution" 
+        with open(f"{directory}{mazeFileName.split('.')[0]}-{algorithm}-Solution.txt", "w") as file:
+            # Write the output string to the file
+            file.write(outputString)
+    except Exception as e:
+        c.print(f"\n[*] Error in saving file, {e}")
+
+
+    return True
 
 
 def statsTable(algorithm: str, explored: int, adjacencyList: list, path: list, start: float, end: float) -> Table:
@@ -257,9 +265,12 @@ def solveMaze(adjacencyList: Dict[int, List[Tuple[int, int]]], root: int, goal: 
         # Save solution to file.
         if print:
             c.print("[*] Saving solution...")
-        saveSolution(mazeFileName, mazeFile.copy(), path, algorithmType)
+        saved = saveSolution(mazeFileName, mazeFile.copy(), path, algorithmType)
         if print:
-            c.print(f"[*] {algorithmType} Solution saved")
+            if saved:
+                c.print(f"[*] {algorithmType} Solution saved")
+            else:
+                c.print(f"[*] Solution failed to save")
 
     else:
         # If no solution is found.
