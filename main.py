@@ -268,7 +268,7 @@ def solveMaze(adjacencyList: Dict[int, List[Tuple[int, int]]], root: int, goal: 
         saved = saveSolution(mazeFileName, mazeFile.copy(), path, algorithmType)
         if print:
             if saved:
-                c.print(f"[*] {algorithmType} Solution saved in /solutions/ directory")
+                c.print(f"[*] {algorithmType} Solution saved in [purple]/solutions/[white] directory")
             else:
                 c.print(f"[*] Solution failed to save")
 

@@ -1,6 +1,6 @@
 from heapq import heappush, heappop
 from typing import Dict, List, Tuple
-from collections import deque, defaultdict
+from collections import defaultdict
 
 def aStarSolver(adjacencyList: Dict[str, List[str]], root: str, goal: str) -> Tuple[Dict[str, str], int]:
 	"""
