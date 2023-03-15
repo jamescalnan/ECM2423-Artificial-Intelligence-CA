@@ -8,13 +8,13 @@ def aStarSolver(adjacencyList: Dict[str, List[str]], root: str, goal: str) -> Tu
 
 	Args:
 		adjacencyList (dictionary of list): a dictionary that maps each node in the graph to a list of its adjacent nodes.
-    	root (tuple): the node to start the search from.
-    	goal (tuple): the node to search for.
+		root (tuple): the node to start the search from.
+		goal (tuple): the node to search for.
 
 	Returns:
-    	If the goal node is found, returns a tuple containing a dictionary that maps each visited node to its parent in the search tree, and the number of nodes explored during the traversal.
-    	If the goal node is not found, returns a tuple containing None for the path dictionary, and the number of nodes explored during the traversal.
-    """
+		If the goal node is found, returns a tuple containing a dictionary that maps each visited node to its parent in the search tree, and the number of nodes explored during the traversal.
+		If the goal node is not found, returns a tuple containing None for the path dictionary, and the number of nodes explored during the traversal.
+	"""
 
 
 	# Set the heuristic multiplier.
@@ -81,15 +81,15 @@ def aStarSolver(adjacencyList: Dict[str, List[str]], root: str, goal: str) -> Tu
 
 
 def heuristic(current: Tuple[int, int], goal: Tuple[int, int], m: int = 1) -> int:
-    """
-    Calculate the Manhattan distance between two nodes.
+	"""
+	Calculate the Manhattan distance between two nodes.
 
-    Args:
-    	current (Tuple[int, int]): The current node.
-    	goal (Tuple[int, int]): The goal node.
-    	m (int): The weight to multiply the Manhattan distance by.
+	Args:
+		current (Tuple[int, int]): The current node.
+		goal (Tuple[int, int]): The goal node.
+		m (int): The weight to multiply the Manhattan distance by.
 
-    Returns:
-    	int: The calculated heuristic value.
-    """
-    return (abs(current[0] - goal[0]) + abs(current[1] - goal[1])) * m
+	Returns:
+		int: The calculated heuristic value.
+	"""
+	return (abs(current[0] - goal[0]) + abs(current[1] - goal[1])) * m

@@ -364,7 +364,7 @@ if __name__ == "__main__":
 
         c.print(ASTARstats)
 
-        c.print("\n[*] Solutions saved in /solutions/ directory")        
+        c.print("\n[*] Solutions saved in [purple]/solutions/[white] directory")       
 
     else:
         solveMaze(adjacencyList, root, goal, mazeFileName, "DFS")

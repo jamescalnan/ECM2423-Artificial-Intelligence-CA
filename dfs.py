@@ -7,13 +7,13 @@ def depthFirstSearch(adjacencyList: Dict[Tuple, List[Tuple]], root: Tuple, goal:
     Traverses a graph represented by an adjacency list, starting from a specified root node, and searches for a goal node.
     
     Args:
-    	adjacencyList (dictionary of list): a dictionary that maps each node in the graph to a list of its adjacent nodes.
-    	root (tuple): the node to start the search from.
-    	goal (tuple): the node to search for.
+        adjacencyList (dictionary of list): a dictionary that maps each node in the graph to a list of its adjacent nodes.
+        root (tuple): the node to start the search from.
+        goal (tuple): the node to search for.
     
     Returns:
-    	If the goal node is found, returns a tuple containing a dictionary that maps each visited node to its parent in the search tree, and the number of nodes explored during the traversal.
-    	If the goal node is not found, returns a tuple containing None for the path dictionary, and the number of nodes explored during the traversal.
+        If the goal node is found, returns a tuple containing a dictionary that maps each visited node to its parent in the search tree, and the number of nodes explored during the traversal.
+        If the goal node is not found, returns a tuple containing None for the path dictionary, and the number of nodes explored during the traversal.
     """
     
     # Initialize an empty set to keep track of discovered nodes.
